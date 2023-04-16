@@ -1,28 +1,37 @@
 package k8simple
 
 import (
-	"strconv",
-	"os",
+	"os"
 
-	"k8s.io/client-go/kubernetes",
 	"k8s.io/client-go/tools/clientcmd"
-	"github.com/SeethalakshmiB/k8simple/pkg/k8simple"
 )
 
 func switchNamespace(namespace string) (status bool) {
-	kubeconfig := os.GetEnv("KUBECONFIG")
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
-
+	kubeconfig := os.Getenv("~/.kube/config")
+	// rules := clientcmd.NewDefaultClientConfigLoadingRules()
+	// config, err := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(rules, &clientcmd.ConfigOverrides{}).RawConfig()
+	config, err := clientcmd.LoadFromFile(kubeconfig)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	clientSet, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		panic(err.Error())
-	}
+	config.Contexts[config.CurrentContext].Namespace = namespace
 
-	clientset.CoreV1().RESTClient().SetNamespace(namespace)
+	// clientSet, err := kubernetes.NewForConfig(config)
+	// currentContext := config.CurrentContext
+
+	// if err != nil {
+	// 	panic(err.Error())
+	// }
+
+	// config.CurrentContext = "test"
+
+	// config = &rest.Config{
+	// 	Context: clientcmd.ContextOverrideFlags( ,,Namespace: {"Default": namespace})
+	// }
+
+	// clientSet.CoreV1().Namespaces()
 
 	return true
 }
+

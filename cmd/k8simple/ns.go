@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/SeethalakshmiB/k8simple/pkg/k8simple/k8simple"
+	"github.com/SeethalakshmiB/k8simple/pkg/k8simple"
 )
 
 var nsCmd = &cobra.Command{
@@ -20,4 +20,9 @@ var nsCmd = &cobra.Command{
 			fmt.Println("Unable to switch into namespace... :(")
 		}
 	},
+}
+
+
+func init(){
+rootCmd.AddCommand(nsCmd)
 }
